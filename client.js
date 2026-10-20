@@ -53,7 +53,7 @@ window.__ModuleLoader__.load({
 
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-20-r'
+    var BUILD = 'p5r-build/2026-10-20-t'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -322,35 +322,57 @@ body[data-p5r] [role="dialog"] {
   overflow: hidden;
 }
 
-/* the calling-card emblem, floated behind the reading column */
+/* the calling-card emblem, floated behind the reading column: big enough to
+   read as a mark, capped so it never reaches the sidebar or the composer */
 .p5r-emblem {
   position: absolute;
   left: 50%;
-  top: 42%;
-  width: min(40vw, 440px);
+  top: 41%;
+  width: min(46vw, 580px);
+  max-height: calc(100vh - 320px);
   aspect-ratio: 1 / 1;
   transform: translate(-50%, -50%) rotate(-4deg);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  opacity: 0.075;
+  opacity: 0.13;
   mix-blend-mode: multiply;
   pointer-events: none;
 }
 
-/* speed lines, masked away from the reading area, slowly turning */
+/* Speed lines. The layer is a large SQUARE centred on the frame and sized past
+   the viewport diagonal, so no edge of it can ever sweep into view while it
+   turns — that hard stop the rays used to end on was this element's own border.
+   The mask is a circle (not closest-side, which became an ellipse on a
+   rectangle) and fades out well before the square's edge, so the rays thin away
+   instead of stopping. */
 .p5r-lines {
   position: absolute;
-  inset: -25%;
+  left: 50%;
+  top: 50%;
+  width: 120vmax;
+  height: 120vmax;
+  margin: -60vmax 0 0 -60vmax;
   background: repeating-conic-gradient(
     from 0deg at 50% 50%,
-    rgba(10, 10, 10, 0.2) 0deg 1.1deg,
-    transparent 1.1deg 7deg
+    rgba(10, 10, 10, 0.18) 0deg 1deg,
+    transparent 1deg 6.5deg
   );
-  -webkit-mask-image: radial-gradient(closest-side, transparent 40%, #000 76%);
-  mask-image: radial-gradient(closest-side, transparent 40%, #000 76%);
-  animation: p5r-spin 28s linear infinite;
-  opacity: 0.5;
+  -webkit-mask-image: radial-gradient(
+    circle at 50% 50%,
+    transparent 0 24vmax,
+    #000 34vmax 52vmax,
+    transparent 62vmax
+  );
+  mask-image: radial-gradient(
+    circle at 50% 50%,
+    transparent 0 24vmax,
+    #000 34vmax 52vmax,
+    transparent 62vmax
+  );
+  animation: p5r-spin 34s linear infinite;
+  opacity: 0.42;
+  will-change: transform;
 }
 
 @keyframes p5r-spin {
