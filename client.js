@@ -53,7 +53,7 @@ window.__ModuleLoader__.load({
 
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-20-ai'
+    var BUILD = 'p5r-build/2026-10-20-aj'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -587,11 +587,11 @@ body[data-p5r] [data-chat-flow-kind='user'] [class*='_bubble'] {
     0 14px,
     14px 0,
     calc(100% - 110px) 4px,
-    calc(100% - 96px) 22%,
-    calc(100% - 92px) 38%,
+    calc(100% - 96px) 20%,
+    calc(100% - 92px) 30%,
     100% 58%,
-    calc(100% - 86px) 70%,
-    calc(100% - 96px) 84%,
+    calc(100% - 86px) 78%,
+    calc(100% - 96px) 86%,
     calc(100% - 110px) calc(100% - 4px),
     22px calc(100% - 2px),
     0 calc(100% - 18px)
@@ -644,11 +644,11 @@ body[data-p5r] div:has(> [data-composer-card])::before {
     0 16px,
     16px 0,
     calc(100% - 88px) 4px,
-    calc(100% - 76px) 22%,
-    calc(100% - 72px) 38%,
+    calc(100% - 76px) 20%,
+    calc(100% - 72px) 30%,
     100% 58%,
-    calc(100% - 68px) 70%,
-    calc(100% - 76px) 84%,
+    calc(100% - 68px) 78%,
+    calc(100% - 76px) 86%,
     calc(100% - 88px) calc(100% - 4px),
     26px calc(100% - 3px),
     0 calc(100% - 22px)
