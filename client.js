@@ -53,7 +53,7 @@ window.__ModuleLoader__.load({
 
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-20-an'
+    var BUILD = 'p5r-build/2026-10-20-ao'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -578,20 +578,21 @@ body[data-p5r] [data-chat-flow-kind='user'] [class*='_bubble'] {
   /* Room for the tail: it has to live inside the same box, because a clip-path
      can never paint outside the element it belongs to. */
   padding: 12px 130px 14px 20px !important;
-  /* One wedge, one apex. Each flank carries a single fold, and the two folds sit
-     at DIFFERENT distances from the base. The fold points sit closer to the base
-     than the straight edge would: the flank swings OUT first and then folds back
-     toward the apex, which is the direction a drawn tail kinks. The apex is the
-     only vertex at 100%, so it stays one point instead of two. */
+  /* One wedge, one apex, measured in PIXELS from the bottom edge. Percentages
+     made the spike stretch with the bubble, so a long message changed its angle;
+     fixed offsets keep the same slope no matter how many lines the message has.
+     The top of the tail is clamped with max() so a one-line bubble still gets a
+     valid shape instead of a negative coordinate. */
   clip-path: polygon(
     0 14px,
     14px 0,
     calc(100% - 110px) 4px,
-    calc(100% - 96px) 20%,
-    calc(100% - 92px) 30%,
-    100% 58%,
-    calc(100% - 86px) 78%,
-    calc(100% - 96px) 86%,
+    calc(100% - 110px) max(4px, calc(100% - 152px)),
+    calc(100% - 96px) max(4px, calc(100% - 152px)),
+    calc(100% - 92px) max(10px, calc(100% - 128px)),
+    100% max(20px, calc(100% - 70px)),
+    calc(100% - 86px) max(26px, calc(100% - 44px)),
+    calc(100% - 96px) max(30px, calc(100% - 18px)),
     calc(100% - 110px) calc(100% - 4px),
     22px calc(100% - 2px),
     0 calc(100% - 18px)
