@@ -53,7 +53,7 @@ window.__ModuleLoader__.load({
 
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-20-w'
+    var BUILD = 'p5r-build/2026-10-20-x'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -575,55 +575,26 @@ body[data-p5r] [data-chat-flow-kind='user'] [class*='_bubble'] {
   background: #0a0a0b !important;
   color: #f7f1e3 !important;
   border-radius: 0 !important;
-  padding: 12px 26px 12px 18px !important;
-  /* cut corners, a notch in the top edge and a step at the bottom left: the
-     silhouette is deliberately uneven, like a torn-off strip */
+  /* extra room on the right: the tail lives inside the same box, because a
+     clip-path can never paint outside the element it belongs to */
+  padding: 12px 46px 14px 20px !important;
+  /* The same manga panel as the composer: four straight edges at uneven
+     angles, three small shears, and ONE tail biting out of the right edge,
+     pointing at the speaker. */
   clip-path: polygon(
+    0 14px,
     14px 0,
-    46% 0,
-    46% 5px,
-    62% 5px,
-    62% 0,
-    100% 0,
-    100% calc(100% - 16px),
-    calc(100% - 16px) 100%,
-    20px 100%,
-    20px calc(100% - 6px),
-    0 calc(100% - 6px),
-    0 14px
+    calc(100% - 54px) 4px,
+    calc(100% - 51px) 30%,
+    100% 50%,
+    calc(100% - 42px) 57%,
+    calc(100% - 37px) 78%,
+    calc(100% - 24px) 100%,
+    22px calc(100% - 2px),
+    0 calc(100% - 18px)
   );
-  filter: drop-shadow(2px 0 0 #f7f1e3) drop-shadow(-2px 0 0 #f7f1e3)
-    drop-shadow(0 2px 0 #f7f1e3) drop-shadow(0 -2px 0 #f7f1e3);
-}
-
-/* The tail: one spike off the right edge, pointing at the speaker. A CSS
-   triangle cannot carry a border, so it is drawn twice — a paper-white triangle
-   under a slightly smaller ink one, which leaves a keyline exactly on the
-   silhouette. */
-body[data-p5r] [data-chat-flow-kind='user']::before {
-  content: "";
-  position: absolute;
-  right: 0;
-  bottom: 12px;
-  width: 0;
-  height: 0;
-  border-left: 20px solid #f7f1e3;
-  border-top: 11px solid transparent;
-  border-bottom: 11px solid transparent;
-  pointer-events: none;
-}
-
-body[data-p5r] [data-chat-flow-kind='user']::after {
-  content: "";
-  position: absolute;
-  right: 2px;
-  bottom: 14px;
-  width: 0;
-  height: 0;
-  border-left: 17px solid #0a0a0b;
-  border-top: 9px solid transparent;
-  border-bottom: 9px solid transparent;
-  pointer-events: none;
+  filter: drop-shadow(2.5px 0 0 #f7f1e3) drop-shadow(-2.5px 0 0 #f7f1e3)
+    drop-shadow(0 2.5px 0 #f7f1e3) drop-shadow(0 -2.5px 0 #f7f1e3);
 }
 
 body[data-p5r] [data-chat-flow-kind='assistant-step'] {
