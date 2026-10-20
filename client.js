@@ -53,7 +53,7 @@ window.__ModuleLoader__.load({
 
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-20-ak'
+    var BUILD = 'p5r-build/2026-10-20-al'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -616,12 +616,16 @@ body[data-p5r] [data-chat-flow-kind='user']::after {
   position: absolute;
   right: 4px;
   bottom: 0;
-  width: 190px;
-  height: 130px;
+  width: 210px;
+  height: 150px;
   background-image: url("/plugins/theme-p5r/tail.png");
   background-repeat: no-repeat;
   background-position: right bottom;
   background-size: contain;
+  /* the cut-out PNG is the black shape only; the paper keyline is drawn here so
+     it matches the bubble's outline exactly */
+  filter: drop-shadow(2.5px 0 0 #f7f1e3) drop-shadow(-2.5px 0 0 #f7f1e3)
+    drop-shadow(0 2.5px 0 #f7f1e3) drop-shadow(0 -2.5px 0 #f7f1e3);
   pointer-events: none;
   z-index: 2;
 }
