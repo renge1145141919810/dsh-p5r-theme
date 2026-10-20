@@ -53,7 +53,7 @@ window.__ModuleLoader__.load({
 
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-20-x'
+    var BUILD = 'p5r-build/2026-10-20-y'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -585,10 +585,12 @@ body[data-p5r] [data-chat-flow-kind='user'] [class*='_bubble'] {
     0 14px,
     14px 0,
     calc(100% - 54px) 4px,
-    calc(100% - 51px) 30%,
-    100% 50%,
-    calc(100% - 42px) 57%,
-    calc(100% - 37px) 78%,
+    calc(100% - 52px) 22%,
+    100% 34%,
+    calc(100% - 46px) 41%,
+    calc(100% - 5px) 52%,
+    calc(100% - 44px) 60%,
+    calc(100% - 38px) 74%,
     calc(100% - 24px) 100%,
     22px calc(100% - 2px),
     0 calc(100% - 18px)
@@ -635,17 +637,19 @@ body[data-p5r] div:has(> [data-composer-card])::before {
   transform: translateX(calc(-50% + 10px));
   background: #0a0a0b;
   /* A manga panel: four straight edges whose corners sit at uneven angles (cut
-     by hand, not by a rectangle), plus ONE tail biting out of the right edge and
-     pointing at whatever is speaking. Bevels on the other three corners keep the
-     "scissors" feel without reading as a rounded box. */
+     by hand, not by a rectangle), plus one RIPPED tail on the right edge — two
+     prongs with a notch between them, not a single wedge. Bevels on the other
+     corners keep the "scissors" feel without reading as a rounded box. */
   clip-path: polygon(
     0 16px,
     16px 0,
     calc(100% - 74px) 3px,
-    calc(100% - 72px) 32%,
-    100% 52%,
-    calc(100% - 63px) 58%,
-    calc(100% - 57px) 74%,
+    calc(100% - 72px) 24%,
+    100% 36%,
+    calc(100% - 64px) 44%,
+    calc(100% - 6px) 55%,
+    calc(100% - 62px) 63%,
+    calc(100% - 56px) 76%,
     calc(100% - 44px) 100%,
     26px calc(100% - 3px),
     0 calc(100% - 22px)
