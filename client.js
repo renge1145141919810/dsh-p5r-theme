@@ -1,14 +1,14 @@
-﻿/**
- * dsh-theme-p5r 鈥?Client half.
+/**
+ * dsh-theme-p5r -Client half.
  *
  * A fan-made, asset-free skin: everything below is CSS and token values, no
  * image, logo or font file from Persona 5 Royal is bundled or referenced.
  *
  * Two layers, in this order:
- *   1) theme.overrideTokens 鈥?the app's own --dsw-alias-* tokens, in light and
+ *   1) theme.overrideTokens -the app's own --dsw-alias-* tokens, in light and
  *      dark pairs, so every surface the app paints itself follows the palette
  *      and follows the OS light/dark switch with no JS repaint.
- *   2) one scoped stylesheet under body[data-p5r] 鈥?geometry (square corners,
+ *   2) one scoped stylesheet under body[data-p5r] -geometry (square corners,
  *      slanted accents), typography (heavy italic), halftone grain, scrollbar,
  *      selection and hover inversion. Scoped so that removing the attribute and
  *      the style element restores the stock UI exactly.
@@ -25,7 +25,7 @@ window.__ModuleLoader__.load({
 
     var React = require('react')
 
-    /* Original watermark emblem: a whale in the calling-card idiom 鈥?flat black
+    /* Original watermark emblem: a whale in the calling-card idiom -flat black
        silhouette, hard corners, a white eye and a bitten-out jaw line. Drawn
        here as geometry; nothing is traced, imported or bundled. It is the
        project's own mark, not a game logo. */
@@ -53,7 +53,7 @@ window.__ModuleLoader__.load({
 
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-20-af'
+    var BUILD = 'p5r-build/2026-10-20-ag'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -85,7 +85,7 @@ window.__ModuleLoader__.load({
 
     var CSS = `
 /* ============================================================
-   P5R phantom skin 鈥?scoped to body[data-p5r]
+   P5R phantom skin -scoped to body[data-p5r]
    ============================================================ */
 
 body[data-p5r] {
@@ -342,7 +342,7 @@ body[data-p5r] [role="dialog"] {
 
 /* Speed lines. The layer is a large SQUARE centred on the frame and sized past
    the viewport diagonal, so no edge of it can ever sweep into view while it
-   turns 鈥?that hard stop the rays used to end on was this element's own border.
+   turns -that hard stop the rays used to end on was this element's own border.
    The mask is a circle (not closest-side, which became an ellipse on a
    rectangle) and fades out well before the square's edge, so the rays thin away
    instead of stopping. */
@@ -522,7 +522,7 @@ body[data-p5r] [class*='_panelRow']:nth-of-type(even)::before {
   transform: translateX(5px);
 }
 
-/* Chosen row: only the cut-out behind it changes 鈥?the bar keeps the app's own
+/* Chosen row: only the cut-out behind it changes -the bar keeps the app's own
    paint, so its label can never lose contrast. */
 body[data-p5r] [class*='_sessionRow'][class*='_selected']::before,
 body[data-p5r] [class*='_panelRow'][class*='_panelActive']::before {
@@ -578,19 +578,20 @@ body[data-p5r] [data-chat-flow-kind='user'] [class*='_bubble'] {
   /* Room for the tail: it has to live inside the same box, because a clip-path
      can never paint outside the element it belongs to. */
   padding: 12px 130px 14px 20px !important;
-  /* One wedge, one apex. Each flank carries a single fold 鈥?and the two folds
-     sit at DIFFERENT distances from the base 鈥?so the spike looks bent like a
-     stroke rather than fractured. The apex is the only vertex at 100%, which is
-     what keeps it reading as one point instead of two. */
+  /* One wedge, one apex. Each flank carries a single fold, and the two folds sit
+     at DIFFERENT distances from the base, so the spike looks bent like a stroke
+     rather than fractured. The folds are pushed almost to the wedge's own axis,
+     which is what makes the bend read at small sizes. The apex is the only
+     vertex at 100%, so it stays one point instead of two. */
   clip-path: polygon(
     0 14px,
     14px 0,
     calc(100% - 110px) 4px,
-    calc(100% - 96px) 26%,
-    calc(100% - 74px) 38%,
+    calc(100% - 96px) 24%,
+    calc(100% - 42px) 38%,
     100% 58%,
-    calc(100% - 58px) 70%,
-    calc(100% - 96px) 80%,
+    calc(100% - 30px) 70%,
+    calc(100% - 96px) 82%,
     calc(100% - 110px) calc(100% - 4px),
     22px calc(100% - 2px),
     0 calc(100% - 18px)
@@ -643,11 +644,11 @@ body[data-p5r] div:has(> [data-composer-card])::before {
     0 16px,
     16px 0,
     calc(100% - 88px) 4px,
-    calc(100% - 76px) 26%,
-    calc(100% - 58px) 38%,
+    calc(100% - 76px) 24%,
+    calc(100% - 34px) 38%,
     100% 58%,
-    calc(100% - 46px) 70%,
-    calc(100% - 76px) 80%,
+    calc(100% - 24px) 70%,
+    calc(100% - 76px) 82%,
     calc(100% - 88px) calc(100% - 4px),
     26px calc(100% - 3px),
     0 calc(100% - 22px)
@@ -662,7 +663,7 @@ body[data-p5r] div:has(> [data-composer-card])::before {
 
 /* Optional drop-in: put a file named dialog.png next to client.js and it is
    painted over the plate. The rule resolves to a 404 when the file is absent,
-   and a missing background layer simply paints nothing 鈥?so the CSS plate
+   and a missing background layer simply paints nothing -so the CSS plate
    above stays the default and nothing has to be switched off. */
 body[data-p5r] div:has(> [data-composer-card])::after {
   content: "";
@@ -777,8 +778,8 @@ body[data-p5r] [data-composer-card] {
     }
 
     /* The frame-wide phantom layer: speed lines, the wipe and the impact flash.
-       It watches the transcript for newly appended rows 鈥?the one moment the
-       app announces by itself 鈥?and fires the effect once per burst. All of it
+       It watches the transcript for newly appended rows -the one moment the
+       app announces by itself -and fires the effect once per burst. All of it
        is pointer-events:none, so nothing under it loses a click. */
     function PhantomLayer() {
       var rootRef = React.useRef(null)
