@@ -53,7 +53,7 @@ window.__ModuleLoader__.load({
 
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-20-ag'
+    var BUILD = 'p5r-build/2026-10-20-ah'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -579,18 +579,18 @@ body[data-p5r] [data-chat-flow-kind='user'] [class*='_bubble'] {
      can never paint outside the element it belongs to. */
   padding: 12px 130px 14px 20px !important;
   /* One wedge, one apex. Each flank carries a single fold, and the two folds sit
-     at DIFFERENT distances from the base, so the spike looks bent like a stroke
-     rather than fractured. The folds are pushed almost to the wedge's own axis,
-     which is what makes the bend read at small sizes. The apex is the only
-     vertex at 100%, so it stays one point instead of two. */
+     at DIFFERENT distances from the base. The fold points sit closer to the base
+     than the straight edge would: the flank swings OUT first and then folds back
+     toward the apex, which is the direction a drawn tail kinks. The apex is the
+     only vertex at 100%, so it stays one point instead of two. */
   clip-path: polygon(
     0 14px,
     14px 0,
     calc(100% - 110px) 4px,
     calc(100% - 96px) 24%,
-    calc(100% - 42px) 38%,
+    calc(100% - 78px) 38%,
     100% 58%,
-    calc(100% - 30px) 70%,
+    calc(100% - 66px) 70%,
     calc(100% - 96px) 82%,
     calc(100% - 110px) calc(100% - 4px),
     22px calc(100% - 2px),
@@ -645,9 +645,9 @@ body[data-p5r] div:has(> [data-composer-card])::before {
     16px 0,
     calc(100% - 88px) 4px,
     calc(100% - 76px) 24%,
-    calc(100% - 34px) 38%,
+    calc(100% - 62px) 38%,
     100% 58%,
-    calc(100% - 24px) 70%,
+    calc(100% - 52px) 70%,
     calc(100% - 76px) 82%,
     calc(100% - 88px) calc(100% - 4px),
     26px calc(100% - 3px),
