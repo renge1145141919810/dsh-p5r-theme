@@ -1,8 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Phantom theme: red slash and domino mask">
-  <rect width="512" height="512" fill="#0a0a0b"/>
-  <path d="M0 356 L512 172 L512 268 L0 452 Z" fill="#e60012"/>
-  <path d="M70 190 L442 190 L408 300 C332 336 180 336 104 300 Z" fill="#f3eee2"/>
-  <path d="M150 230 L240 238 L192 288 Z" fill="#0a0a0b"/>
-  <path d="M362 230 L272 238 L320 288 Z" fill="#0a0a0b"/>
-  <path d="M0 96 L512 96 L512 108 L0 108 Z" fill="#e60012"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Phantom whale theme mark">
+  <rect width="512" height="512" fill="#c8102e"/>
+  <path d="M0 78 L512 40 L512 62 L0 100 Z" fill="#f7f1e3"/>
+  <g transform="translate(16 104) scale(0.92)">
+    <g fill="#0a0a0b">
+      <path d="M92 300 C104 214 188 166 286 182 L340 172 C388 168 422 190 440 224 L492 180 L474 250 L508 302 L444 308 C418 348 372 370 318 376 C236 386 148 362 100 330 Z"/>
+      <path d="M212 344 L286 330 L246 392 Z"/>
+      <path d="M150 132 L178 190 L196 150 L216 200 L228 158 L244 178 L228 128 Z"/>
+    </g>
+    <g fill="#f7f1e3">
+      <path d="M146 246 L212 230 L204 278 L152 284 Z"/>
+      <path d="M98 316 L196 322 L186 338 L96 332 Z"/>
+    </g>
+  </g>
 </svg>

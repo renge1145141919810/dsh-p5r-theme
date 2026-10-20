@@ -25,20 +25,27 @@ window.__ModuleLoader__.load({
 
     var React = require('react')
 
-    /* Original watermark emblem: a top hat over a domino mask, drawn here as
-       geometry. It echoes the composition of the series' calling-card mark
-       without reproducing it — nothing is traced, imported or bundled. */
+    /* Original watermark emblem: a whale in the calling-card idiom — flat black
+       silhouette, hard corners, a white eye and a bitten-out jaw line. Drawn
+       here as geometry; nothing is traced, imported or bundled. It is the
+       project's own mark, not a game logo. */
     var EMBLEM_SVG =
       '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">' +
       '<g fill="#0a0a0b">' +
-      '<path d="M146 306 L160 116 Q164 92 192 88 L324 88 Q352 92 356 116 L370 306 Z"/>' +
-      '<ellipse cx="258" cy="312" rx="168" ry="30"/>' +
-      '<path d="M126 350 Q258 322 390 350 L372 418 Q258 458 144 418 Z"/>' +
+      /* body: blunt head at the left, back ridge, tail stock, two flukes */
+      '<path d="M92 300 C104 214 188 166 286 182 L340 172 C388 168 422 190 440 224 ' +
+      'L492 180 L474 250 L508 302 L444 308 C418 348 372 370 318 376 ' +
+      'C236 386 148 362 100 330 Z"/>' +
+      /* pectoral fin */
+      '<path d="M212 344 L286 330 L246 392 Z"/>' +
+      /* spout: three hard splinters */
+      '<path d="M150 132 L178 190 L196 150 L216 200 L228 158 L244 178 L228 128 Z"/>' +
       '</g>' +
       '<g fill="#f7f1e3">' +
-      '<path d="M178 368 L246 358 L240 400 L190 406 Z"/>' +
-      '<path d="M278 358 L346 368 L330 406 L280 400 Z"/>' +
-      '<path d="M232 424 L268 424 L258 444 Z"/>' +
+      /* eye */
+      '<path d="M146 246 L212 230 L204 278 L152 284 Z"/>' +
+      /* jaw line bitten out of the silhouette */
+      '<path d="M98 316 L196 322 L186 338 L96 332 Z"/>' +
       '</g>' +
       '</svg>'
 
@@ -46,7 +53,7 @@ window.__ModuleLoader__.load({
 
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-20-q'
+    var BUILD = 'p5r-build/2026-10-20-r'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
