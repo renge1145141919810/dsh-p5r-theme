@@ -669,6 +669,28 @@ body[data-p5r] div:has(> [data-composer-card])::before {
   pointer-events: none;
 }
 
+/* Optional drop-in: put a file named dialog.png next to client.js and it is
+   painted over the plate. The rule resolves to a 404 when the file is absent,
+   and a missing background layer simply paints nothing — so the CSS plate
+   above stays the default and nothing has to be switched off. */
+body[data-p5r] div:has(> [data-composer-card])::after {
+  content: "";
+  position: absolute;
+  top: -9px;
+  bottom: -11px;
+  left: 50%;
+  width: min(
+    calc(100% - 2 * var(--dsh-composer-side-clearance, 0px) + 64px),
+    calc(var(--dsh-composer-card-max-width, 100%) + 64px)
+  );
+  transform: translateX(calc(-50% + 10px));
+  background-image: url("/plugins/theme-p5r/dialog.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 0;
+}
+
 body[data-p5r] [data-composer-card] {
   position: relative;
   z-index: 1;
