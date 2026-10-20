@@ -53,7 +53,7 @@ window.__ModuleLoader__.load({
 
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-20-ac'
+    var BUILD = 'p5r-build/2026-10-20-ad'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -575,24 +575,24 @@ body[data-p5r] [data-chat-flow-kind='user'] [class*='_bubble'] {
   background: #0a0a0b !important;
   color: #f7f1e3 !important;
   border-radius: 0 !important;
-  /* extra room on the right: the tail lives inside the same box, because a
-     clip-path can never paint outside the element it belongs to. A bend needs
-     length, so the run is wide enough for the jog to be legible. */
-  padding: 12px 104px 14px 20px !important;
-  /* ONE bolt, drawn as a single zigzag: the upper flank leaves the box, jogs
-     OUT, cuts back IN, then runs to the only far point; the lower flank is one
-     straight line home. Asymmetric on purpose — two symmetric notches read as a
-     bone, one flank stepping reads as lightning. */
+  /* Room for the tail: it has to live inside the same box, because a clip-path
+     can never paint outside the element it belongs to. */
+  padding: 12px 150px 14px 20px !important;
+  /* The bolt from the reference, as one continuous outline: from the body it
+     rises to a tall upper peak, drops into a deep valley, throws the long far
+     point, drops into a second valley and returns to the body. Seven vertices,
+     no other protrusion — the valleys are ~45px deep, which is what keeps the
+     two points reading as one drawn bolt instead of two separate spikes. */
   clip-path: polygon(
     0 14px,
     14px 0,
-    calc(100% - 108px) 3px,
-    calc(100% - 100px) 20%,
-    calc(100% - 30px) 27%,
-    calc(100% - 64px) 38%,
-    100% 50%,
-    calc(100% - 58px) 74%,
-    calc(100% - 96px) 100%,
+    calc(100% - 140px) 5px,
+    calc(100% - 52px) 0,
+    calc(100% - 96px) 40%,
+    100% 54%,
+    calc(100% - 104px) 64%,
+    calc(100% - 118px) 100%,
+    calc(100% - 140px) calc(100% - 5px),
     22px calc(100% - 2px),
     0 calc(100% - 18px)
   );
@@ -632,24 +632,24 @@ body[data-p5r] div:has(> [data-composer-card])::before {
   /* card width + room for the spikes on the right (the shift below keeps the
      left overhang modest so the plate still hugs the input) */
   width: min(
-    calc(100% - 2 * var(--dsh-composer-side-clearance, 0px) + 132px),
-    calc(var(--dsh-composer-card-max-width, 100%) + 132px)
+    calc(100% - 2 * var(--dsh-composer-side-clearance, 0px) + 150px),
+    calc(var(--dsh-composer-card-max-width, 100%) + 150px)
   );
-  transform: translateX(calc(-50% + 42px));
+  transform: translateX(calc(-50% + 45px));
   background: #0a0a0b;
   /* A manga panel: four straight edges whose corners sit at uneven angles (cut
-     by hand, not by a rectangle), plus ONE zigzag bolt on the right edge: out,
-     jog, back in, then the only far point, and one straight line home. */
+     by hand, not by a rectangle), plus the same seven-vertex bolt as the chat
+     bubble, scaled to the shorter plate. */
   clip-path: polygon(
     0 16px,
     16px 0,
-    calc(100% - 136px) 3px,
-    calc(100% - 128px) 20%,
-    calc(100% - 52px) 27%,
-    calc(100% - 88px) 38%,
-    100% 50%,
-    calc(100% - 82px) 74%,
-    calc(100% - 124px) 100%,
+    calc(100% - 120px) 4px,
+    calc(100% - 44px) 0,
+    calc(100% - 80px) 38%,
+    100% 56%,
+    calc(100% - 86px) 68%,
+    calc(100% - 100px) 100%,
+    calc(100% - 120px) calc(100% - 4px),
     26px calc(100% - 3px),
     0 calc(100% - 22px)
   );
