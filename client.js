@@ -53,7 +53,7 @@ window.__ModuleLoader__.load({
 
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-20-aa'
+    var BUILD = 'p5r-build/2026-10-20-ab'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -578,22 +578,19 @@ body[data-p5r] [data-chat-flow-kind='user'] [class*='_bubble'] {
   /* extra room on the right: the tail lives inside the same box, because a
      clip-path can never paint outside the element it belongs to */
   padding: 12px 72px 14px 20px !important;
-  /* The same manga panel as the composer: four straight edges at uneven
-     angles, three small shears, and ONE tail on the right edge. The tail is a
-     single long spike: two deep V notches (one on each flank) cut into an
-     otherwise straight wedge, which is what makes it read as a drawn bolt
-     rather than a torn edge. */
+  /* One bolt, drawn in one stroke: from the edge it steps IN once (a single
+     notch near the base), runs straight out to the only far point, then runs
+     straight back and steps IN again at the bottom. No intermediate shoulder
+     sticks out, so nothing can read as a second prong. */
   clip-path: polygon(
     0 14px,
     14px 0,
-    calc(100% - 76px) 4px,
-    calc(100% - 70px) 26%,
-    calc(100% - 14px) 34%,
-    calc(100% - 40px) 42%,
-    100% 56%,
-    calc(100% - 36px) 64%,
-    calc(100% - 62px) 78%,
-    calc(100% - 34px) 100%,
+    calc(100% - 76px) 3px,
+    calc(100% - 70px) 24%,
+    calc(100% - 58px) 30%,
+    100% 50%,
+    calc(100% - 56px) 70%,
+    calc(100% - 68px) 100%,
     22px calc(100% - 2px),
     0 calc(100% - 18px)
   );
@@ -639,21 +636,18 @@ body[data-p5r] div:has(> [data-composer-card])::before {
   transform: translateX(calc(-50% + 24px));
   background: #0a0a0b;
   /* A manga panel: four straight edges whose corners sit at uneven angles (cut
-     by hand, not by a rectangle), plus ONE long bolt on the right edge. Two deep
-     V notches — one on each flank — cut into a straight wedge; that is what
-     reads as a drawn bolt instead of a frayed edge. Bevels on the other corners
-     keep the "scissors" feel without becoming a rounded box. */
+     by hand, not by a rectangle), plus ONE bolt on the right edge. The bolt is
+     drawn in one stroke — a single notch in, a long straight run to the only far
+     point, a long straight run back, one notch in. Nothing else protrudes. */
   clip-path: polygon(
     0 16px,
     16px 0,
-    calc(100% - 106px) 3px,
-    calc(100% - 100px) 26%,
-    calc(100% - 40px) 33%,
-    calc(100% - 66px) 41%,
-    100% 55%,
-    calc(100% - 62px) 63%,
-    calc(100% - 88px) 77%,
-    calc(100% - 60px) 100%,
+    calc(100% - 100px) 3px,
+    calc(100% - 94px) 24%,
+    calc(100% - 74px) 30%,
+    100% 48%,
+    calc(100% - 72px) 68%,
+    calc(100% - 88px) 100%,
     26px calc(100% - 3px),
     0 calc(100% - 22px)
   );
