@@ -1,9 +1,10 @@
 # dsh-theme-p5r
 
-Persona 5 Royal 风格的 DeepSeek Harness Web 主题插件（粉丝向，非商业）。
+粉丝向的Persona 5 Royal 风格的 DeepSeek Harness 桌面版 主题插件喵。
 
-红黑撞色、斜切印刷几何、半调网点、粗斜体标题；亮色模式切换成"报纸白"印刷风。
-**仓库里没有任何 Persona 5 Royal 的图片、logo 或字体**——所有视觉都由 CSS 生成，颜色与几何是原创实现。
+没有改什么特别的东西，只是修改了背景和一些动态效果，主体就是红黑配色喵
+
+背景上怪盗鱼形象是deepseek自己绘制的喵，就是大肥鱼眼中的自己喵
 
 ## 效果
 
@@ -26,7 +27,7 @@ Persona 5 Royal 风格的 DeepSeek Harness Web 主题插件（粉丝向，非商
 从 GitHub 装（推荐，会随仓库更新）：
 
 ```bash
-dsh plugin --profile desktop add github:<你的用户名>/dsh-theme-p5r
+dsh plugin --profile desktop add github:renge1145141919810/dsh-p5r-theme
 ```
 
 或者本地目录装（开发时用，改完刷新页面就生效）：
@@ -53,11 +54,20 @@ index.js           Host 半：空实现（插件行需要它）
 cordis.patch.yml   bundle patch：插入 theme-p5r 一行
 locale/zh.json     插件卡片文案（中文）
 locale/en.json     插件卡片文案（英文）
-icon.svg           自绘图标（蒙面 + 红斜带）
+icon.svg           自绘图标（红底 + 怪盗鲸鱼）
+1.png / 2.png      预览截图
 ```
 
-## 许可与声明
+## 已知限制
 
-代码 MIT。没有任何游戏素材，因此不存在再分发问题。
+- **没有设置页**：插件装上就生效，开关只有"启用/停用插件"。分项开关（网点、水印、动效）还没做。
+- **没有打字机效果**：消息是应用自己的流式输出，逐字光标需要替换消息渲染器，目前没做。
+- **亮色模式是"纸白 + 黑框"**，不是红底；红底只在暗色模式下出现，跟随系统/应用的外观设置。
+- 主题依赖 DSH 的一些内部锚点（`data-chat-flow`、`data-composer-card` 等无哈希属性）。DSH 大版本升级后如果某块样式失效，改 `client.js` 里对应的选择器即可。
 
-本项目是粉丝作品，与 ATLUS / SEGA 无关，未获其认可；"Persona 5"、"Persona 5 Royal" 及相关名称、标识归其各自所有者。
+## 预览图
+
+![1](1.png)
+
+![2](2.png)
+
