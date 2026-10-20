@@ -53,7 +53,7 @@ window.__ModuleLoader__.load({
 
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-20-u'
+    var BUILD = 'p5r-build/2026-10-20-w'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -596,18 +596,33 @@ body[data-p5r] [data-chat-flow-kind='user'] [class*='_bubble'] {
     drop-shadow(0 2px 0 #f7f1e3) drop-shadow(0 -2px 0 #f7f1e3);
 }
 
-/* the loose flap that comes off the plate in the reference art */
+/* The tail: one spike off the right edge, pointing at the speaker. A CSS
+   triangle cannot carry a border, so it is drawn twice — a paper-white triangle
+   under a slightly smaller ink one, which leaves a keyline exactly on the
+   silhouette. */
+body[data-p5r] [data-chat-flow-kind='user']::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 12px;
+  width: 0;
+  height: 0;
+  border-left: 20px solid #f7f1e3;
+  border-top: 11px solid transparent;
+  border-bottom: 11px solid transparent;
+  pointer-events: none;
+}
+
 body[data-p5r] [data-chat-flow-kind='user']::after {
   content: "";
   position: absolute;
-  right: 8px;
-  bottom: 2px;
-  width: 20px;
-  height: 20px;
-  background: #0a0a0b;
-  border-top: 1.5px solid #f7f1e3;
-  border-right: 1.5px solid #f7f1e3;
-  transform: rotate(16deg) skewX(-10deg);
+  right: 2px;
+  bottom: 14px;
+  width: 0;
+  height: 0;
+  border-left: 17px solid #0a0a0b;
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
   pointer-events: none;
 }
 
@@ -648,18 +663,21 @@ body[data-p5r] div:has(> [data-composer-card])::before {
   );
   transform: translateX(calc(-50% + 10px));
   background: #0a0a0b;
-  /* flat slab, hard corners, and two spikes bitten out of the right edge */
+  /* A manga panel: four straight edges whose corners sit at uneven angles (cut
+     by hand, not by a rectangle), plus ONE tail biting out of the right edge and
+     pointing at whatever is speaking. Bevels on the other three corners keep the
+     "scissors" feel without reading as a rounded box. */
   clip-path: polygon(
-    0 18px,
+    0 16px,
     16px 0,
-    86% 0,
-    100% 22%,
-    89% 40%,
-    99% 56%,
-    86% 100%,
-    26px 100%,
-    26px calc(100% - 10px),
-    0 calc(100% - 10px)
+    calc(100% - 74px) 3px,
+    calc(100% - 72px) 32%,
+    100% 52%,
+    calc(100% - 63px) 58%,
+    calc(100% - 57px) 74%,
+    calc(100% - 44px) 100%,
+    26px calc(100% - 3px),
+    0 calc(100% - 22px)
   );
   filter: drop-shadow(4px 0 0 #f7f1e3) drop-shadow(-4px 0 0 #f7f1e3)
     drop-shadow(0 4px 0 #f7f1e3) drop-shadow(0 -4px 0 #f7f1e3);
