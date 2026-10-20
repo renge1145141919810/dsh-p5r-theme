@@ -53,7 +53,7 @@ window.__ModuleLoader__.load({
 
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-20-t'
+    var BUILD = 'p5r-build/2026-10-20-u'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -640,27 +640,29 @@ body[data-p5r] div:has(> [data-composer-card])::before {
      into the sidebar. Size the plate from the CARD instead: card width + the
      11px overhang on each side, capped by the card's own max width. */
   left: 50%;
+  /* card width + room for the spikes on the right (the shift below keeps the
+     left overhang modest so the plate still hugs the input) */
   width: min(
-    calc(100% - 2 * var(--dsh-composer-side-clearance, 0px) + 22px),
-    calc(var(--dsh-composer-card-max-width, 100%) + 22px)
+    calc(100% - 2 * var(--dsh-composer-side-clearance, 0px) + 64px),
+    calc(var(--dsh-composer-card-max-width, 100%) + 64px)
   );
-  transform: translateX(-50%);
+  transform: translateX(calc(-50% + 10px));
   background: #0a0a0b;
-  /* stepped corners and one offset tab: a cut-out plate, not a rounded card */
+  /* flat slab, hard corners, and two spikes bitten out of the right edge */
   clip-path: polygon(
-    0 20px,
-    18px 0,
-    calc(100% - 34px) 0,
-    calc(100% - 34px) 10px,
-    100% 10px,
-    100% calc(100% - 14px),
-    calc(100% - 14px) 100%,
-    30px 100%,
-    30px calc(100% - 10px),
+    0 18px,
+    16px 0,
+    86% 0,
+    100% 22%,
+    89% 40%,
+    99% 56%,
+    86% 100%,
+    26px 100%,
+    26px calc(100% - 10px),
     0 calc(100% - 10px)
   );
-  filter: drop-shadow(3px 0 0 #f7f1e3) drop-shadow(-3px 0 0 #f7f1e3)
-    drop-shadow(0 3px 0 #f7f1e3) drop-shadow(0 -3px 0 #f7f1e3);
+  filter: drop-shadow(4px 0 0 #f7f1e3) drop-shadow(-4px 0 0 #f7f1e3)
+    drop-shadow(0 4px 0 #f7f1e3) drop-shadow(0 -4px 0 #f7f1e3);
   /* plate sits in flow and the card is lifted above it: no negative z-index, so
      no ancestor background can swallow the frame */
   z-index: 0;
