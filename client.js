@@ -53,7 +53,7 @@ window.__ModuleLoader__.load({
 
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-20-z'
+    var BUILD = 'p5r-build/2026-10-20-aa'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -577,24 +577,23 @@ body[data-p5r] [data-chat-flow-kind='user'] [class*='_bubble'] {
   border-radius: 0 !important;
   /* extra room on the right: the tail lives inside the same box, because a
      clip-path can never paint outside the element it belongs to */
-  padding: 12px 46px 14px 20px !important;
+  padding: 12px 72px 14px 20px !important;
   /* The same manga panel as the composer: four straight edges at uneven
      angles, three small shears, and ONE tail on the right edge. The tail is a
-     single point, but its two flanks kink in and out on the way there, so it
-     reads as a hand-drawn snake rather than a triangle. */
+     single long spike: two deep V notches (one on each flank) cut into an
+     otherwise straight wedge, which is what makes it read as a drawn bolt
+     rather than a torn edge. */
   clip-path: polygon(
     0 14px,
     14px 0,
-    calc(100% - 54px) 4px,
-    calc(100% - 52px) 22%,
-    calc(100% - 20px) 29%,
-    calc(100% - 27px) 36%,
-    100% 48%,
-    calc(100% - 28px) 55%,
-    calc(100% - 22px) 62%,
-    calc(100% - 46px) 72%,
-    calc(100% - 34px) 84%,
-    calc(100% - 24px) 100%,
+    calc(100% - 76px) 4px,
+    calc(100% - 70px) 26%,
+    calc(100% - 14px) 34%,
+    calc(100% - 40px) 42%,
+    100% 56%,
+    calc(100% - 36px) 64%,
+    calc(100% - 62px) 78%,
+    calc(100% - 34px) 100%,
     22px calc(100% - 2px),
     0 calc(100% - 18px)
   );
@@ -634,28 +633,27 @@ body[data-p5r] div:has(> [data-composer-card])::before {
   /* card width + room for the spikes on the right (the shift below keeps the
      left overhang modest so the plate still hugs the input) */
   width: min(
-    calc(100% - 2 * var(--dsh-composer-side-clearance, 0px) + 64px),
-    calc(var(--dsh-composer-card-max-width, 100%) + 64px)
+    calc(100% - 2 * var(--dsh-composer-side-clearance, 0px) + 96px),
+    calc(var(--dsh-composer-card-max-width, 100%) + 96px)
   );
-  transform: translateX(calc(-50% + 10px));
+  transform: translateX(calc(-50% + 24px));
   background: #0a0a0b;
   /* A manga panel: four straight edges whose corners sit at uneven angles (cut
-     by hand, not by a rectangle), plus ONE snaking tail on the right edge. The
-     flanks kink in and out so the single point reads as hand-drawn. Bevels on
-     the other corners keep the "scissors" feel without becoming a rounded box. */
+     by hand, not by a rectangle), plus ONE long bolt on the right edge. Two deep
+     V notches — one on each flank — cut into a straight wedge; that is what
+     reads as a drawn bolt instead of a frayed edge. Bevels on the other corners
+     keep the "scissors" feel without becoming a rounded box. */
   clip-path: polygon(
     0 16px,
     16px 0,
-    calc(100% - 74px) 3px,
-    calc(100% - 72px) 24%,
-    calc(100% - 30px) 31%,
-    calc(100% - 38px) 38%,
-    100% 50%,
-    calc(100% - 40px) 57%,
-    calc(100% - 32px) 64%,
-    calc(100% - 56px) 74%,
-    calc(100% - 46px) 86%,
-    calc(100% - 44px) 100%,
+    calc(100% - 106px) 3px,
+    calc(100% - 100px) 26%,
+    calc(100% - 40px) 33%,
+    calc(100% - 66px) 41%,
+    100% 55%,
+    calc(100% - 62px) 63%,
+    calc(100% - 88px) 77%,
+    calc(100% - 60px) 100%,
     26px calc(100% - 3px),
     0 calc(100% - 22px)
   );
