@@ -53,7 +53,7 @@ window.__ModuleLoader__.load({
 
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-20-ad'
+    var BUILD = 'p5r-build/2026-10-20-ae'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -577,22 +577,21 @@ body[data-p5r] [data-chat-flow-kind='user'] [class*='_bubble'] {
   border-radius: 0 !important;
   /* Room for the tail: it has to live inside the same box, because a clip-path
      can never paint outside the element it belongs to. */
-  padding: 12px 150px 14px 20px !important;
-  /* The bolt from the reference, as one continuous outline: from the body it
-     rises to a tall upper peak, drops into a deep valley, throws the long far
-     point, drops into a second valley and returns to the body. Seven vertices,
-     no other protrusion — the valleys are ~45px deep, which is what keeps the
-     two points reading as one drawn bolt instead of two separate spikes. */
+  padding: 12px 100px 14px 20px !important;
+  /* A short, wide-based wedge — the shape a drawn speech tail actually has. The
+     upper flank kinks once on its way out, the lower flank runs straight home,
+     and there is exactly ONE point at the far end. Proportions were checked by
+     rendering the polygon offline: a long flat tail reads as a bite or a flag,
+     a short wedge with one kink reads as a spike. */
   clip-path: polygon(
     0 14px,
     14px 0,
-    calc(100% - 140px) 5px,
-    calc(100% - 52px) 0,
-    calc(100% - 96px) 40%,
-    100% 54%,
-    calc(100% - 104px) 64%,
-    calc(100% - 118px) 100%,
-    calc(100% - 140px) calc(100% - 5px),
+    calc(100% - 90px) 4px,
+    calc(100% - 70px) 30%,
+    calc(100% - 34px) 42%,
+    100% 56%,
+    calc(100% - 70px) 74%,
+    calc(100% - 90px) calc(100% - 4px),
     22px calc(100% - 2px),
     0 calc(100% - 18px)
   );
@@ -632,24 +631,23 @@ body[data-p5r] div:has(> [data-composer-card])::before {
   /* card width + room for the spikes on the right (the shift below keeps the
      left overhang modest so the plate still hugs the input) */
   width: min(
-    calc(100% - 2 * var(--dsh-composer-side-clearance, 0px) + 150px),
-    calc(var(--dsh-composer-card-max-width, 100%) + 150px)
+    calc(100% - 2 * var(--dsh-composer-side-clearance, 0px) + 110px),
+    calc(var(--dsh-composer-card-max-width, 100%) + 110px)
   );
-  transform: translateX(calc(-50% + 45px));
+  transform: translateX(calc(-50% + 26px));
   background: #0a0a0b;
   /* A manga panel: four straight edges whose corners sit at uneven angles (cut
-     by hand, not by a rectangle), plus the same seven-vertex bolt as the chat
+     by hand, not by a rectangle), plus the same short wedge tail as the chat
      bubble, scaled to the shorter plate. */
   clip-path: polygon(
     0 16px,
     16px 0,
-    calc(100% - 120px) 4px,
-    calc(100% - 44px) 0,
-    calc(100% - 80px) 38%,
+    calc(100% - 74px) 4px,
+    calc(100% - 58px) 30%,
+    calc(100% - 26px) 42%,
     100% 56%,
-    calc(100% - 86px) 68%,
-    calc(100% - 100px) 100%,
-    calc(100% - 120px) calc(100% - 4px),
+    calc(100% - 58px) 76%,
+    calc(100% - 74px) calc(100% - 4px),
     26px calc(100% - 3px),
     0 calc(100% - 22px)
   );
