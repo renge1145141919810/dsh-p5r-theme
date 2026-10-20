@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Phantom theme: red slash and domino mask">
+  <rect width="512" height="512" fill="#0a0a0b"/>
+  <path d="M0 356 L512 172 L512 268 L0 452 Z" fill="#e60012"/>
+  <path d="M70 190 L442 190 L408 300 C332 336 180 336 104 300 Z" fill="#f3eee2"/>
+  <path d="M150 230 L240 238 L192 288 Z" fill="#0a0a0b"/>
+  <path d="M362 230 L272 238 L320 288 Z" fill="#0a0a0b"/>
+  <path d="M0 96 L512 96 L512 108 L0 108 Z" fill="#e60012"/>
+</svg>

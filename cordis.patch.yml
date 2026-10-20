@@ -1,0 +1,9 @@
+# dsh-theme-p5r bundle patch
+#
+# Installing this package as a bundle adds one plugin row. The Host half is
+# intentionally empty (index.js exports an empty apply); the whole theme lives
+# in the Client half (client.js), which overrides the --dsw-* alias tokens and
+# injects one scoped stylesheet.
+- insert:
+    - id: theme-p5r
+      name: 'dsh-theme-p5r'
