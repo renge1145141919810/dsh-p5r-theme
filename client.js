@@ -53,7 +53,7 @@ window.__ModuleLoader__.load({
 
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-20-ab'
+    var BUILD = 'p5r-build/2026-10-20-ac'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -576,21 +576,23 @@ body[data-p5r] [data-chat-flow-kind='user'] [class*='_bubble'] {
   color: #f7f1e3 !important;
   border-radius: 0 !important;
   /* extra room on the right: the tail lives inside the same box, because a
-     clip-path can never paint outside the element it belongs to */
-  padding: 12px 72px 14px 20px !important;
-  /* One bolt, drawn in one stroke: from the edge it steps IN once (a single
-     notch near the base), runs straight out to the only far point, then runs
-     straight back and steps IN again at the bottom. No intermediate shoulder
-     sticks out, so nothing can read as a second prong. */
+     clip-path can never paint outside the element it belongs to. A bend needs
+     length, so the run is wide enough for the jog to be legible. */
+  padding: 12px 104px 14px 20px !important;
+  /* ONE bolt, drawn as a single zigzag: the upper flank leaves the box, jogs
+     OUT, cuts back IN, then runs to the only far point; the lower flank is one
+     straight line home. Asymmetric on purpose — two symmetric notches read as a
+     bone, one flank stepping reads as lightning. */
   clip-path: polygon(
     0 14px,
     14px 0,
-    calc(100% - 76px) 3px,
-    calc(100% - 70px) 24%,
-    calc(100% - 58px) 30%,
+    calc(100% - 108px) 3px,
+    calc(100% - 100px) 20%,
+    calc(100% - 30px) 27%,
+    calc(100% - 64px) 38%,
     100% 50%,
-    calc(100% - 56px) 70%,
-    calc(100% - 68px) 100%,
+    calc(100% - 58px) 74%,
+    calc(100% - 96px) 100%,
     22px calc(100% - 2px),
     0 calc(100% - 18px)
   );
@@ -630,24 +632,24 @@ body[data-p5r] div:has(> [data-composer-card])::before {
   /* card width + room for the spikes on the right (the shift below keeps the
      left overhang modest so the plate still hugs the input) */
   width: min(
-    calc(100% - 2 * var(--dsh-composer-side-clearance, 0px) + 96px),
-    calc(var(--dsh-composer-card-max-width, 100%) + 96px)
+    calc(100% - 2 * var(--dsh-composer-side-clearance, 0px) + 132px),
+    calc(var(--dsh-composer-card-max-width, 100%) + 132px)
   );
-  transform: translateX(calc(-50% + 24px));
+  transform: translateX(calc(-50% + 42px));
   background: #0a0a0b;
   /* A manga panel: four straight edges whose corners sit at uneven angles (cut
-     by hand, not by a rectangle), plus ONE bolt on the right edge. The bolt is
-     drawn in one stroke — a single notch in, a long straight run to the only far
-     point, a long straight run back, one notch in. Nothing else protrudes. */
+     by hand, not by a rectangle), plus ONE zigzag bolt on the right edge: out,
+     jog, back in, then the only far point, and one straight line home. */
   clip-path: polygon(
     0 16px,
     16px 0,
-    calc(100% - 100px) 3px,
-    calc(100% - 94px) 24%,
-    calc(100% - 74px) 30%,
-    100% 48%,
-    calc(100% - 72px) 68%,
-    calc(100% - 88px) 100%,
+    calc(100% - 136px) 3px,
+    calc(100% - 128px) 20%,
+    calc(100% - 52px) 27%,
+    calc(100% - 88px) 38%,
+    100% 50%,
+    calc(100% - 82px) 74%,
+    calc(100% - 124px) 100%,
     26px calc(100% - 3px),
     0 calc(100% - 22px)
   );
