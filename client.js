@@ -53,7 +53,7 @@ window.__ModuleLoader__.load({
 
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-20-y'
+    var BUILD = 'p5r-build/2026-10-20-z'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -579,18 +579,21 @@ body[data-p5r] [data-chat-flow-kind='user'] [class*='_bubble'] {
      clip-path can never paint outside the element it belongs to */
   padding: 12px 46px 14px 20px !important;
   /* The same manga panel as the composer: four straight edges at uneven
-     angles, three small shears, and ONE tail biting out of the right edge,
-     pointing at the speaker. */
+     angles, three small shears, and ONE tail on the right edge. The tail is a
+     single point, but its two flanks kink in and out on the way there, so it
+     reads as a hand-drawn snake rather than a triangle. */
   clip-path: polygon(
     0 14px,
     14px 0,
     calc(100% - 54px) 4px,
     calc(100% - 52px) 22%,
-    100% 34%,
-    calc(100% - 46px) 41%,
-    calc(100% - 5px) 52%,
-    calc(100% - 44px) 60%,
-    calc(100% - 38px) 74%,
+    calc(100% - 20px) 29%,
+    calc(100% - 27px) 36%,
+    100% 48%,
+    calc(100% - 28px) 55%,
+    calc(100% - 22px) 62%,
+    calc(100% - 46px) 72%,
+    calc(100% - 34px) 84%,
     calc(100% - 24px) 100%,
     22px calc(100% - 2px),
     0 calc(100% - 18px)
@@ -637,19 +640,21 @@ body[data-p5r] div:has(> [data-composer-card])::before {
   transform: translateX(calc(-50% + 10px));
   background: #0a0a0b;
   /* A manga panel: four straight edges whose corners sit at uneven angles (cut
-     by hand, not by a rectangle), plus one RIPPED tail on the right edge — two
-     prongs with a notch between them, not a single wedge. Bevels on the other
-     corners keep the "scissors" feel without reading as a rounded box. */
+     by hand, not by a rectangle), plus ONE snaking tail on the right edge. The
+     flanks kink in and out so the single point reads as hand-drawn. Bevels on
+     the other corners keep the "scissors" feel without becoming a rounded box. */
   clip-path: polygon(
     0 16px,
     16px 0,
     calc(100% - 74px) 3px,
     calc(100% - 72px) 24%,
-    100% 36%,
-    calc(100% - 64px) 44%,
-    calc(100% - 6px) 55%,
-    calc(100% - 62px) 63%,
-    calc(100% - 56px) 76%,
+    calc(100% - 30px) 31%,
+    calc(100% - 38px) 38%,
+    100% 50%,
+    calc(100% - 40px) 57%,
+    calc(100% - 32px) 64%,
+    calc(100% - 56px) 74%,
+    calc(100% - 46px) 86%,
     calc(100% - 44px) 100%,
     26px calc(100% - 3px),
     0 calc(100% - 22px)
