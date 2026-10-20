@@ -53,7 +53,7 @@ window.__ModuleLoader__.load({
 
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-20-aj'
+    var BUILD = 'p5r-build/2026-10-20-ak'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -605,6 +605,25 @@ body[data-p5r] [data-chat-flow-kind='assistant-step'] {
   border: 2px solid #f7f1e3;
   padding: 12px 16px;
   margin: 4px 0;
+}
+
+/* Optional local spike: drop a transparent PNG named tail.png next to client.js
+   and it is laid over the bubble's bottom-right corner, on top of the CSS tail.
+   A missing file is a 404 that paints nothing, so the drawn tail stays the
+   default. The image is yours to supply and is git-ignored. */
+body[data-p5r] [data-chat-flow-kind='user']::after {
+  content: "";
+  position: absolute;
+  right: 4px;
+  bottom: 0;
+  width: 190px;
+  height: 130px;
+  background-image: url("/plugins/theme-p5r/tail.png");
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  background-size: contain;
+  pointer-events: none;
+  z-index: 2;
 }
 
 /* --- the composer plate ---------------------------------------------
