@@ -53,7 +53,7 @@ window.__ModuleLoader__.load({
 
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-20-ao'
+    var BUILD = 'p5r-build/2026-10-21-a'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -572,8 +572,9 @@ body[data-p5r] [data-chat-flow-kind='user'] {
 }
 
 body[data-p5r] [data-chat-flow-kind='user'] [class*='_bubble'] {
-  background: #0a0a0b !important;
-  color: #f7f1e3 !important;
+  /* the player's line is the paper card: paper fill, ink type, ink frame */
+  background: #f7f1e3 !important;
+  color: #0a0a0b !important;
   border-radius: 0 !important;
   /* Room for the tail: it has to live inside the same box, because a clip-path
      can never paint outside the element it belongs to. */
@@ -597,8 +598,16 @@ body[data-p5r] [data-chat-flow-kind='user'] [class*='_bubble'] {
     22px calc(100% - 2px),
     0 calc(100% - 18px)
   );
-  filter: drop-shadow(2.5px 0 0 #f7f1e3) drop-shadow(-2.5px 0 0 #f7f1e3)
-    drop-shadow(0 2.5px 0 #f7f1e3) drop-shadow(0 -2.5px 0 #f7f1e3);
+  /* ink keyline around the paper card; it has to follow the clipped outline,
+     which is why it is four offset shadows rather than a border */
+  filter: drop-shadow(3px 0 0 #0a0a0b) drop-shadow(-3px 0 0 #0a0a0b)
+    drop-shadow(0 3px 0 #0a0a0b) drop-shadow(0 -3px 0 #0a0a0b);
+}
+
+/* links inside the paper card keep a readable ink-red instead of the theme's
+   light-on-dark link colour */
+body[data-p5r] [data-chat-flow-kind='user'] [class*='_bubble'] a {
+  color: #b3000e;
 }
 
 body[data-p5r] [data-chat-flow-kind='assistant-step'] {
