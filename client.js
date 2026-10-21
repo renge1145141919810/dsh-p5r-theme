@@ -53,7 +53,7 @@ window.__ModuleLoader__.load({
 
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-21-a'
+    var BUILD = 'p5r-build/2026-10-21-b'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -598,10 +598,12 @@ body[data-p5r] [data-chat-flow-kind='user'] [class*='_bubble'] {
     22px calc(100% - 2px),
     0 calc(100% - 18px)
   );
-  /* ink keyline around the paper card; it has to follow the clipped outline,
-     which is why it is four offset shadows rather than a border */
-  filter: drop-shadow(3px 0 0 #0a0a0b) drop-shadow(-3px 0 0 #0a0a0b)
-    drop-shadow(0 3px 0 #0a0a0b) drop-shadow(0 -3px 0 #0a0a0b);
+  /* Ink keyline around the paper card. It has to follow the clipped outline, so
+     it is four offset shadows rather than a border. Ink on the deep red canvas
+     is a low-contrast pair, so the frame is deliberately thick: below ~5px it
+     stops reading as a frame and starts reading as a soft edge. */
+  filter: drop-shadow(5px 0 0 #0a0a0b) drop-shadow(-5px 0 0 #0a0a0b)
+    drop-shadow(0 5px 0 #0a0a0b) drop-shadow(0 -5px 0 #0a0a0b);
 }
 
 /* links inside the paper card keep a readable ink-red instead of the theme's
