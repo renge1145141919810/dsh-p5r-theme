@@ -53,7 +53,7 @@ window.__ModuleLoader__.load({
 
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-21-b'
+    var BUILD = 'p5r-build/2026-10-21-c'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -569,6 +569,12 @@ body[data-p5r] [class*='_newSession']:hover {
    -------------------------------------------------------------------- */
 body[data-p5r] [data-chat-flow-kind='user'] {
   position: relative;
+  /* The keyline lives HERE, not on the bubble. A filter on the same element as
+     a clip-path is clipped by it, so a drop-shadow drawn on the bubble never
+     survived; on the parent the shadow is computed from the whole painted
+     subtree and lands outside the child's clip, which is exactly the frame. */
+  filter: drop-shadow(5px 0 0 #0a0a0b) drop-shadow(-5px 0 0 #0a0a0b)
+    drop-shadow(0 5px 0 #0a0a0b) drop-shadow(0 -5px 0 #0a0a0b);
 }
 
 body[data-p5r] [data-chat-flow-kind='user'] [class*='_bubble'] {
@@ -598,12 +604,6 @@ body[data-p5r] [data-chat-flow-kind='user'] [class*='_bubble'] {
     22px calc(100% - 2px),
     0 calc(100% - 18px)
   );
-  /* Ink keyline around the paper card. It has to follow the clipped outline, so
-     it is four offset shadows rather than a border. Ink on the deep red canvas
-     is a low-contrast pair, so the frame is deliberately thick: below ~5px it
-     stops reading as a frame and starts reading as a soft edge. */
-  filter: drop-shadow(5px 0 0 #0a0a0b) drop-shadow(-5px 0 0 #0a0a0b)
-    drop-shadow(0 5px 0 #0a0a0b) drop-shadow(0 -5px 0 #0a0a0b);
 }
 
 /* links inside the paper card keep a readable ink-red instead of the theme's
