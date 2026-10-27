@@ -805,11 +805,11 @@ body[data-p5r] [data-composer-card] {
 
 /* --- reduce ----------------------------------------------------------
    Everything decorative is squashed when the OS asks for less motion - EXCEPT
-   the affinity fanfare. That global `animation-duration: 0.01ms !important`
-   was what made the notes invisible on a machine with animations switched off:
-   they were spawned, finished in a hundredth of a millisecond, and removed by
-   their own animationend handler before a single frame was painted. The
-   fanfare now gets a shorter, calmer animation instead of none. */
+   the affinity fanfare. That global animation-duration override (0.01ms, with
+   the important flag) was what made the notes invisible on a machine with
+   animations switched off: they were spawned, finished in a hundredth of a
+   millisecond, and removed by their own animationend handler before a frame was
+   painted. The fanfare now gets a shorter, calmer animation instead of none. */
 @media (prefers-reduced-motion: reduce) {
   body[data-p5r] *:not(.p5r-note):not(.p5r-note-img),
   body[data-p5r]::before {
