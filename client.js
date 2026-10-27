@@ -51,9 +51,26 @@ window.__ModuleLoader__.load({
 
     var EMBLEM_URL = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(EMBLEM_SVG)
 
+    /* The "affinity up" notes are drawn here, not imported: a filled eighth note
+       in the theme's blue with a paper outline. Three of them rise together when
+       a turn finishes. */
+    var NOTE_SVG =
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 44">' +
+      '<g fill="#2f6ff0" stroke="#f7f1e3" stroke-width="2.2" stroke-linejoin="round">' +
+      '<ellipse cx="11" cy="34" rx="9" ry="6.5" transform="rotate(-18 11 34)"/>' +
+      '<path d="M19.5 34 L19.5 6 L27 10 L27 17 L22.5 14.6 L22.5 34 Z"/>' +
+      '</g>' +
+      '</svg>'
+
+    var NOTE_URL = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(NOTE_SVG)
+
+    /* Audio the user dropped next to this package; served by the Host half's
+       /theme-p5r/media route. A 404 simply means no sound, never an error. */
+    var FANFARE_URL = '/theme-p5r/media/up.mp3'
+
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-21-c'
+    var BUILD = 'p5r-build/2026-10-27-a'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -704,6 +721,50 @@ body[data-p5r] [data-composer-card] {
   box-shadow: none !important;
 }
 
+/* --- the affinity fanfare: three notes rising from the sidebar foot ----
+   The notes are drawn (blue eighth note with a paper outline), not imported,
+   and they leave the DOM as soon as their animation ends. */
+.p5r-notes {
+  position: absolute;
+  left: 24px;
+  bottom: 62px;
+  width: 240px;
+  height: 0;
+  pointer-events: none;
+}
+
+.p5r-note {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 34px;
+  height: 46px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0;
+  animation: p5r-note-rise 1.75s cubic-bezier(0.25, 0.6, 0.3, 1) forwards;
+}
+
+@keyframes p5r-note-rise {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.7) rotate(0deg);
+  }
+  16% {
+    opacity: 1;
+    transform: translate(calc(var(--p5r-drift) * 0.18), -30px) scale(1)
+      rotate(calc(var(--p5r-tilt) * 0.25));
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--p5r-drift), -250px) scale(1.06)
+      rotate(var(--p5r-tilt));
+  }
+}
+
 /* --- reduce ---------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   body[data-p5r] *,
@@ -808,6 +869,46 @@ body[data-p5r] [data-composer-card] {
         var poll = null
         var tries = 0
         var timer = null
+        var quiet = null
+        var audio = null
+
+        /* The affinity fanfare: three drawn notes rising from the sidebar foot
+           while the chime plays. Fired only after the transcript has been quiet
+           for a moment, which is what "the turn finished" looks like from the
+           outside -a per-row trigger would fire on every tool card. */
+        var fanfare = function () {
+          if (reduced) return
+          var rail = node.querySelector('.p5r-notes')
+          if (rail) {
+            for (var i = 0; i < 3; i += 1) {
+              var note = doc.createElement('div')
+              note.className = 'p5r-note'
+              note.style.backgroundImage = 'url("' + NOTE_URL + '")'
+              note.style.setProperty('--p5r-drift', (i - 1) * 26 + 'px')
+              note.style.setProperty('--p5r-tilt', (i - 1) * 9 + 'deg')
+              note.style.animationDelay = i * 130 + 'ms'
+              rail.appendChild(note)
+              /* The node removes itself so a long session cannot pile up dead
+                 elements behind the UI. */
+              ;(function (el) {
+                el.addEventListener('animationend', function () {
+                  if (el.parentNode) el.parentNode.removeChild(el)
+                })
+              })(note)
+            }
+          }
+          try {
+            if (audio === null) {
+              audio = new window.Audio(FANFARE_URL)
+              audio.volume = 0.65
+            }
+            audio.currentTime = 0
+            var started = audio.play()
+            if (started && typeof started.catch === 'function') started.catch(function () {})
+          } catch (e) {
+            /* autoplay policy or a missing file: silence is the fallback */
+          }
+        }
 
         var fire = function () {
           if (reduced) return
@@ -844,6 +945,12 @@ body[data-p5r] [data-composer-card] {
             for (var i = 0; i < records.length; i += 1) {
               if (records[i].addedNodes && records[i].addedNodes.length > 0) {
                 fire()
+                /* restart the quiet window: only the end of the burst counts */
+                if (quiet !== null) clearTimeout(quiet)
+                quiet = window.setTimeout(function () {
+                  quiet = null
+                  fanfare()
+                }, 1100)
                 return
               }
             }
@@ -868,6 +975,14 @@ body[data-p5r] [data-composer-card] {
           if (observer) observer.disconnect()
           if (poll !== null) window.clearInterval(poll)
           if (timer !== null) clearTimeout(timer)
+          if (quiet !== null) clearTimeout(quiet)
+          if (audio !== null) {
+            try {
+              audio.pause()
+            } catch (e) {
+              /* nothing to stop */
+            }
+          }
           doc.body.classList.remove('p5r-shake')
         }
       }, [])
@@ -880,6 +995,7 @@ body[data-p5r] [data-composer-card] {
           style: { backgroundImage: 'url("' + EMBLEM_URL + '")' },
         }),
         React.createElement('div', { className: 'p5r-lines' }),
+        React.createElement('div', { className: 'p5r-notes' }),
         React.createElement('div', { className: 'p5r-slash' }),
         React.createElement('div', { className: 'p5r-flash' })
       )

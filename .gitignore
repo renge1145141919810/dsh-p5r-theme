@@ -9,3 +9,11 @@ dialog.jpg
 tail.png
 tail.jpg
 tail-original.png
+
+# Optional local audio served by the host route (/theme-p5r/media/<name>).
+up.mp4
+up.m4a
+up.aac
+up.mp3
+up.ogg
+up.webm
