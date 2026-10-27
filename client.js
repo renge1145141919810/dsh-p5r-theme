@@ -75,7 +75,7 @@ window.__ModuleLoader__.load({
 
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-27-f'
+    var BUILD = 'p5r-build/2026-10-27-g'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -1096,7 +1096,7 @@ body[data-p5r] [data-composer-card] {
 
       return React.createElement(
         'div',
-        { className: 'p5r-layer', 'aria-hidden': true },
+        { className: 'p5r-layer', 'aria-hidden': true, ref: rootRef },
         React.createElement('div', {
           className: 'p5r-emblem',
           style: { backgroundImage: 'url("' + EMBLEM_URL + '")' },
