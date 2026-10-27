@@ -75,7 +75,7 @@ window.__ModuleLoader__.load({
 
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-27-e'
+    var BUILD = 'p5r-build/2026-10-27-f'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -803,13 +803,25 @@ body[data-p5r] [data-composer-card] {
   }
 }
 
-/* --- reduce ---------------------------------------------------------- */
+/* --- reduce ----------------------------------------------------------
+   Everything decorative is squashed when the OS asks for less motion - EXCEPT
+   the affinity fanfare. That global `animation-duration: 0.01ms !important`
+   was what made the notes invisible on a machine with animations switched off:
+   they were spawned, finished in a hundredth of a millisecond, and removed by
+   their own animationend handler before a single frame was painted. The
+   fanfare now gets a shorter, calmer animation instead of none. */
 @media (prefers-reduced-motion: reduce) {
-  body[data-p5r] *,
+  body[data-p5r] *:not(.p5r-note):not(.p5r-note-img),
   body[data-p5r]::before {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .p5r-note,
+  .p5r-note-img {
+    animation-duration: 1.6s !important;
+    animation-timing-function: ease-out !important;
   }
 }
 `
@@ -955,6 +967,12 @@ body[data-p5r] [data-composer-card] {
             })
             sprite.src = SPRITE_URL
             rail.appendChild(sprite)
+            /* Backstop: if the animation never runs (a host that disables it
+               entirely), animationend never fires and the node would sit there
+               invisible forever. A timer guarantees the cleanup. */
+            window.setTimeout(function () {
+              if (sprite.parentNode) sprite.parentNode.removeChild(sprite)
+            }, 4200)
           }
           try {
             if (audio === null) {
@@ -1048,13 +1066,13 @@ body[data-p5r] [data-composer-card] {
         var demoStep = function () {
           fanfare()
           demos += 1
-          if (demos < 4) {
-            demo = window.setTimeout(demoStep, 7000)
+          if (demos < 5) {
+            demo = window.setTimeout(demoStep, 6000)
           } else {
             demo = null
           }
         }
-        demo = window.setTimeout(demoStep, 2500)
+        demo = window.setTimeout(demoStep, 1500)
 
         return function () {
           if (observer) observer.disconnect()
