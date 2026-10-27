@@ -70,7 +70,7 @@ window.__ModuleLoader__.load({
 
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-27-a'
+    var BUILD = 'p5r-build/2026-10-27-b'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -877,8 +877,11 @@ body[data-p5r] [data-composer-card] {
            for a moment, which is what "the turn finished" looks like from the
            outside -a per-row trigger would fire on every tool card. */
         var fanfare = function () {
-          if (reduced) return
-          var rail = node.querySelector('.p5r-notes')
+          /* The sound is NOT gated on prefers-reduced-motion: that setting is
+             about motion, and muting the chime with it made the whole feature
+             look broken on machines with animations switched off. Only the
+             moving notes respect it. */
+          var rail = reduced ? null : node.querySelector('.p5r-notes')
           if (rail) {
             for (var i = 0; i < 3; i += 1) {
               var note = doc.createElement('div')
@@ -901,14 +904,28 @@ body[data-p5r] [data-composer-card] {
             if (audio === null) {
               audio = new window.Audio(FANFARE_URL)
               audio.volume = 0.65
+              audio.addEventListener('error', function () {
+                window.console?.info?.('[p5r] fanfare audio unavailable:', FANFARE_URL)
+              })
             }
             audio.currentTime = 0
             var started = audio.play()
-            if (started && typeof started.catch === 'function') started.catch(function () {})
+            if (started && typeof started.catch === 'function') {
+              started.catch(function (error) {
+                window.console?.info?.('[p5r] fanfare blocked:', error?.name ?? error)
+              })
+            }
           } catch (e) {
-            /* autoplay policy or a missing file: silence is the fallback */
+            window.console?.info?.('[p5r] fanfare failed:', e)
           }
+          window.console?.info?.(
+            '[p5r] fanfare fired (notes ' + (rail ? 'on' : 'off: reduced motion') + ')',
+          )
         }
+
+        /* A manual trigger, purely so the effect can be verified without waiting for a
+           turn to end: run `__p5rFanfare()` in the page console. */
+        if (typeof window !== 'undefined') window.__p5rFanfare = fanfare
 
         var fire = function () {
           if (reduced) return
@@ -982,6 +999,9 @@ body[data-p5r] [data-composer-card] {
             } catch (e) {
               /* nothing to stop */
             }
+          }
+          if (typeof window !== 'undefined' && window.__p5rFanfare === fanfare) {
+            delete window.__p5rFanfare
           }
           doc.body.classList.remove('p5r-shake')
         }
