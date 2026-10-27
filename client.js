@@ -75,7 +75,7 @@ window.__ModuleLoader__.load({
 
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-27-g'
+    var BUILD = 'p5r-build/2026-10-27-h'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -744,7 +744,7 @@ body[data-p5r] [data-composer-card] {
   position: absolute;
   left: 0;
   bottom: 0;
-  width: 224px;
+  width: 286px;
   height: auto;
   image-rendering: auto;
   opacity: 0;
@@ -921,8 +921,6 @@ body[data-p5r] [data-composer-card] {
         var timer = null
         var quiet = null
         var audio = null
-        var fired = false
-        var demo = null
 
         /* The affinity fanfare: the three-note sprite rises from the sidebar
            foot while the chime plays. Fired only after the transcript has been
@@ -936,6 +934,10 @@ body[data-p5r] [data-composer-card] {
             note.style.setProperty('--p5r-drift', (i - 1) * 26 + 'px')
             note.style.setProperty('--p5r-tilt', (i - 1) * 9 + 'deg')
             note.style.animationDelay = i * 130 + 'ms'
+            /* Inline opacity is the fallback: keyframes override it while the
+               animation runs, but if animations are disabled outright the note
+               is still visible instead of silently staying at 0. */
+            note.style.opacity = '1'
             rail.appendChild(note)
             ;(function (el) {
               el.addEventListener('animationend', function () {
@@ -946,7 +948,6 @@ body[data-p5r] [data-composer-card] {
         }
 
         var fanfare = function () {
-          fired = true
           /* Not gated on prefers-reduced-motion: on a machine with animations
              switched off the whole effect would silently do nothing. The
              aggressive parts (shake, wipe, flash) still respect it. */
@@ -1056,30 +1057,15 @@ body[data-p5r] [data-composer-card] {
           }, 500)
         }
 
-        /* One-shot self demo: a couple of seconds after the layer mounts, if the
-           transcript has not produced a single burst yet, the fanfare runs a few
-           times anyway. It makes the effect visible without waiting for a turn
-           -and it tells the difference between "the trigger never fired" and
-           "the effect never rendered" in one glance. Bounded, so it cannot turn
-           into a permanent noise maker. */
-        var demos = 0
-        var demoStep = function () {
-          fanfare()
-          demos += 1
-          if (demos < 5) {
-            demo = window.setTimeout(demoStep, 6000)
-          } else {
-            demo = null
-          }
-        }
-        demo = window.setTimeout(demoStep, 1500)
+        /* No self demo: the fanfare is a reward, so it has to mean something.
+           It fires only when the transcript goes quiet after real activity —
+           never on page load. `__p5rFanfare()` remains as a manual trigger. */
 
         return function () {
           if (observer) observer.disconnect()
           if (poll !== null) window.clearInterval(poll)
           if (timer !== null) clearTimeout(timer)
           if (quiet !== null) clearTimeout(quiet)
-          if (demo !== null) window.clearInterval(demo)
           if (audio !== null) {
             try {
               audio.pause()
