@@ -70,7 +70,7 @@ window.__ModuleLoader__.load({
 
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-27-b'
+    var BUILD = 'p5r-build/2026-10-27-c'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -737,11 +737,13 @@ body[data-p5r] [data-composer-card] {
   position: absolute;
   left: 0;
   bottom: 0;
-  width: 34px;
-  height: 46px;
+  width: 42px;
+  height: 56px;
   background-repeat: no-repeat;
   background-size: contain;
   opacity: 0;
+  /* composited so the rise cannot be dropped on a busy frame */
+  will-change: transform, opacity;
   animation: p5r-note-rise 1.75s cubic-bezier(0.25, 0.6, 0.3, 1) forwards;
 }
 
@@ -871,17 +873,20 @@ body[data-p5r] [data-composer-card] {
         var timer = null
         var quiet = null
         var audio = null
+        var fired = false
+        var demo = null
 
         /* The affinity fanfare: three drawn notes rising from the sidebar foot
            while the chime plays. Fired only after the transcript has been quiet
            for a moment, which is what "the turn finished" looks like from the
            outside -a per-row trigger would fire on every tool card. */
         var fanfare = function () {
-          /* The sound is NOT gated on prefers-reduced-motion: that setting is
-             about motion, and muting the chime with it made the whole feature
-             look broken on machines with animations switched off. Only the
-             moving notes respect it. */
-          var rail = reduced ? null : node.querySelector('.p5r-notes')
+          fired = true
+          /* The notes are the requested feature, so they are NOT gated on
+             prefers-reduced-motion -on a machine with animations switched off
+             the whole effect would silently do nothing. The aggressive parts
+             (screen shake, wipe, flash) still respect it. */
+          var rail = node.querySelector('.p5r-notes')
           if (rail) {
             for (var i = 0; i < 3; i += 1) {
               var note = doc.createElement('div')
@@ -988,11 +993,22 @@ body[data-p5r] [data-composer-card] {
           }, 500)
         }
 
+        /* One-shot self demo: a couple of seconds after the layer mounts, if the
+           transcript has not produced a single burst yet, the fanfare runs once
+           anyway. It makes the effect visible without waiting for a turn -and it
+           tells the difference between "the trigger never fired" and "the effect
+           never rendered" in one glance. */
+        demo = window.setTimeout(function () {
+          demo = null
+          if (!fired) fanfare()
+        }, 2600)
+
         return function () {
           if (observer) observer.disconnect()
           if (poll !== null) window.clearInterval(poll)
           if (timer !== null) clearTimeout(timer)
           if (quiet !== null) clearTimeout(quiet)
+          if (demo !== null) clearTimeout(demo)
           if (audio !== null) {
             try {
               audio.pause()
