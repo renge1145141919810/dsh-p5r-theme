@@ -68,9 +68,14 @@ window.__ModuleLoader__.load({
        /theme-p5r/media route. A 404 simply means no sound, never an error. */
     var FANFARE_URL = '/theme-p5r/media/up.mp3'
 
+    /* The three-note sprite: the user's own green-screen GIF, re-keyed to alpha
+       and cropped to the moving notes (448x240, 43 frames). If it is absent the
+       effect falls back to the notes this package draws itself. */
+    var SPRITE_URL = '/theme-p5r/media/up.webp'
+
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-27-d'
+    var BUILD = 'p5r-build/2026-10-27-e'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -726,11 +731,42 @@ body[data-p5r] [data-composer-card] {
    and they leave the DOM as soon as their animation ends. */
 .p5r-notes {
   position: absolute;
-  left: 24px;
-  bottom: 62px;
-  width: 240px;
+  left: 18px;
+  bottom: 54px;
+  width: 260px;
   height: 0;
   pointer-events: none;
+}
+
+/* The supplied three-note sprite. It rises from the sidebar foot over the same
+   3.4s the animation itself runs, so the two end together. */
+.p5r-note-img {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 224px;
+  height: auto;
+  image-rendering: auto;
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: p5r-sprite-rise 3.45s cubic-bezier(0.22, 0.7, 0.3, 1) forwards;
+}
+
+@keyframes p5r-sprite-rise {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.82);
+  }
+  10% {
+    opacity: 1;
+  }
+  72% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(26px, -190px) scale(1.02);
+  }
 }
 
 .p5r-note {
@@ -876,56 +912,65 @@ body[data-p5r] [data-composer-card] {
         var fired = false
         var demo = null
 
-        /* The affinity fanfare: three drawn notes rising from the sidebar foot
-           while the chime plays. Fired only after the transcript has been quiet
-           for a moment, which is what "the turn finished" looks like from the
-           outside -a per-row trigger would fire on every tool card. */
+        /* The affinity fanfare: the three-note sprite rises from the sidebar
+           foot while the chime plays. Fired only after the transcript has been
+           quiet for a moment, which is what "the turn finished" looks like from
+           the outside -a per-row trigger would fire on every tool card. */
+        var spawnDrawnNotes = function (rail) {
+          for (var i = 0; i < 3; i += 1) {
+            var note = doc.createElement('div')
+            note.className = 'p5r-note'
+            note.style.backgroundImage = 'url("' + NOTE_URL + '")'
+            note.style.setProperty('--p5r-drift', (i - 1) * 26 + 'px')
+            note.style.setProperty('--p5r-tilt', (i - 1) * 9 + 'deg')
+            note.style.animationDelay = i * 130 + 'ms'
+            rail.appendChild(note)
+            ;(function (el) {
+              el.addEventListener('animationend', function () {
+                if (el.parentNode) el.parentNode.removeChild(el)
+              })
+            })(note)
+          }
+        }
+
         var fanfare = function () {
           fired = true
-          /* The notes are the requested feature, so they are NOT gated on
-             prefers-reduced-motion -on a machine with animations switched off
-             the whole effect would silently do nothing. The aggressive parts
-             (screen shake, wipe, flash) still respect it. */
+          /* Not gated on prefers-reduced-motion: on a machine with animations
+             switched off the whole effect would silently do nothing. The
+             aggressive parts (shake, wipe, flash) still respect it. */
           var rail = node.querySelector('.p5r-notes')
           if (rail) {
-            for (var i = 0; i < 3; i += 1) {
-              var note = doc.createElement('div')
-              note.className = 'p5r-note'
-              note.style.backgroundImage = 'url("' + NOTE_URL + '")'
-              note.style.setProperty('--p5r-drift', (i - 1) * 26 + 'px')
-              note.style.setProperty('--p5r-tilt', (i - 1) * 9 + 'deg')
-              note.style.animationDelay = i * 130 + 'ms'
-              rail.appendChild(note)
-              /* The node removes itself so a long session cannot pile up dead
-                 elements behind the UI. */
-              ;(function (el) {
-                el.addEventListener('animationend', function () {
-                  if (el.parentNode) el.parentNode.removeChild(el)
-                })
-              })(note)
-            }
+            var sprite = doc.createElement('img')
+            sprite.className = 'p5r-note-img'
+            sprite.alt = ''
+            sprite.decoding = 'async'
+            /* If the user has not supplied the sprite, draw the notes instead;
+               either way the effect happens. */
+            sprite.addEventListener('error', function () {
+              if (sprite.parentNode) sprite.parentNode.removeChild(sprite)
+              spawnDrawnNotes(rail)
+            })
+            sprite.addEventListener('animationend', function () {
+              if (sprite.parentNode) sprite.parentNode.removeChild(sprite)
+            })
+            sprite.src = SPRITE_URL
+            rail.appendChild(sprite)
           }
           try {
             if (audio === null) {
               audio = new window.Audio(FANFARE_URL)
               audio.volume = 0.65
-              audio.addEventListener('error', function () {
-                window.console?.info?.('[p5r] fanfare audio unavailable:', FANFARE_URL)
-              })
             }
             audio.currentTime = 0
             var started = audio.play()
             if (started && typeof started.catch === 'function') {
               started.catch(function (error) {
-                window.console?.info?.('[p5r] fanfare blocked:', error?.name ?? error)
+                window.console?.info?.('[p5r] fanfare audio blocked:', error?.name ?? error)
               })
             }
           } catch (e) {
-            window.console?.info?.('[p5r] fanfare failed:', e)
+            /* silence is an acceptable outcome; the notes are the feature */
           }
-          window.console?.info?.(
-            '[p5r] fanfare fired (notes ' + (rail ? 'on' : 'off: reduced motion') + ')',
-          )
         }
 
         /* A manual trigger, purely so the effect can be verified without waiting for a

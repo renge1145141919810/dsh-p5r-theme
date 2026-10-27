@@ -22,8 +22,11 @@ import { fileURLToPath } from 'node:url'
 const PACKAGE_DIR = fileURLToPath(new URL('.', import.meta.url))
 const ROUTE_PREFIX = '/theme-p5r/media'
 
-/** Homegrown or user-supplied audio only; nothing else is served. */
+/** User-supplied artwork and audio only; nothing else is served. */
 const ALLOWED = new Map([
+  ['up.webp', 'image/webp'],
+  ['up.gif', 'image/gif'],
+  ['up.png', 'image/png'],
   ['up.mp4', 'video/mp4'],
   ['up.m4a', 'audio/mp4'],
   ['up.aac', 'audio/aac'],
