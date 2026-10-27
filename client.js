@@ -70,7 +70,7 @@ window.__ModuleLoader__.load({
 
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-27-c'
+    var BUILD = 'p5r-build/2026-10-27-d'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -994,21 +994,29 @@ body[data-p5r] [data-composer-card] {
         }
 
         /* One-shot self demo: a couple of seconds after the layer mounts, if the
-           transcript has not produced a single burst yet, the fanfare runs once
-           anyway. It makes the effect visible without waiting for a turn -and it
-           tells the difference between "the trigger never fired" and "the effect
-           never rendered" in one glance. */
-        demo = window.setTimeout(function () {
-          demo = null
-          if (!fired) fanfare()
-        }, 2600)
+           transcript has not produced a single burst yet, the fanfare runs a few
+           times anyway. It makes the effect visible without waiting for a turn
+           -and it tells the difference between "the trigger never fired" and
+           "the effect never rendered" in one glance. Bounded, so it cannot turn
+           into a permanent noise maker. */
+        var demos = 0
+        var demoStep = function () {
+          fanfare()
+          demos += 1
+          if (demos < 4) {
+            demo = window.setTimeout(demoStep, 7000)
+          } else {
+            demo = null
+          }
+        }
+        demo = window.setTimeout(demoStep, 2500)
 
         return function () {
           if (observer) observer.disconnect()
           if (poll !== null) window.clearInterval(poll)
           if (timer !== null) clearTimeout(timer)
           if (quiet !== null) clearTimeout(quiet)
-          if (demo !== null) clearTimeout(demo)
+          if (demo !== null) window.clearInterval(demo)
           if (audio !== null) {
             try {
               audio.pause()
