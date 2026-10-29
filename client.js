@@ -75,7 +75,7 @@ window.__ModuleLoader__.load({
 
     /* Bumped whenever CSS changes: distinguishes a duplicate mount (ignore) from
        an in-place rebuild swap, where the page still carries the old sheet. */
-    var BUILD = 'p5r-build/2026-10-27-h'
+    var BUILD = 'p5r-build/2026-10-29-a'
     var TOKEN_SOURCE = 'p5r-velvet'
     var STYLE_SELECTOR = 'style[data-plugin="dsh-theme-p5r"]'
 
@@ -634,11 +634,22 @@ body[data-p5r] [data-chat-flow-kind='user'] [class*='_bubble'] a {
   color: #b3000e;
 }
 
+/* The reply plate is mode-aware. In dark mode it is ink with paper type; in
+   light mode the SAME fixed ink plate would put the theme's dark label colour
+   on a black background and make the reply unreadable, so light mode gets a
+   paper plate with the ink frame instead. */
 body[data-p5r] [data-chat-flow-kind='assistant-step'] {
-  background: #0a0a0b !important;
-  border: 2px solid #f7f1e3;
+  background: #fbf6ea !important;
+  border: 2px solid #0a0a0b;
+  color: #12100f !important;
   padding: 12px 16px;
   margin: 4px 0;
+}
+
+body[data-p5r][data-ds-dark-theme] [data-chat-flow-kind='assistant-step'] {
+  background: #0a0a0b !important;
+  border-color: #f7f1e3;
+  color: #f7f1e3 !important;
 }
 
 /* --- the composer plate ---------------------------------------------
@@ -720,10 +731,18 @@ body[data-p5r] div:has(> [data-composer-card])::after {
 body[data-p5r] [data-composer-card] {
   position: relative;
   z-index: 1;
-  background: #0a0a0b !important;
+  /* light mode: paper card on the ink plate, so the theme's dark label colour
+     stays readable; dark mode keeps the original ink card */
+  background: #fbf6ea !important;
+  color: #12100f !important;
   border: none !important;
   border-radius: 0 !important;
   box-shadow: none !important;
+}
+
+body[data-p5r][data-ds-dark-theme] [data-composer-card] {
+  background: #0a0a0b !important;
+  color: #f7f1e3 !important;
 }
 
 /* --- the affinity fanfare: three notes rising from the sidebar foot ----
